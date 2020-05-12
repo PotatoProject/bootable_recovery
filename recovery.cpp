@@ -31,6 +31,7 @@
 #include <functional>
 #include <iterator>
 #include <memory>
+#include <regex>
 #include <string>
 #include <vector>
 
@@ -724,9 +725,9 @@ Device::BuiltinAction start_recovery(Device* device, const std::vector<std::stri
     ui->SetStage(st_cur, st_max);
   }
 
-  std::vector<std::string> title_lines =
-      android::base::Split(android::base::GetProperty("ro.build.fingerprint", ""), ":");
-  title_lines.insert(std::begin(title_lines), "POSP Recovery");
+  std::vector<std::string> title_lines = {
+    "POSP " + android::base::GetProperty("ro.potato.vernum", "(unknown)"),
+  };
   ui->SetTitle(title_lines);
 
   ui->ResetKeyInterruptStatus();
